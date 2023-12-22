@@ -1,0 +1,26 @@
+server:
+  port: 8222
+eureka:
+  client:
+    register-with-eureka: false
+spring:
+  application:
+    name: gateway
+  cloud:
+    gateway:
+      discovery:
+        locator:
+          enabled: true
+      routes:
+        - id: smarthouse
+          uri: http://client-service:8070
+          predicates:
+            - Path=/api/clients/**
+        - id: rating
+          uri: http://car-service:8090
+          predicates:
+            - Path=/api/cars/**
+management:
+  tracing:
+    sampling:
+      probability: 1.0

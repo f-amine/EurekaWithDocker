@@ -1,0 +1,30 @@
+eureka:
+  instance:
+    hostname: localhost
+  client:
+    service-url:
+      defaultZone: http://dicovery-service:8761/eureka
+
+server:
+  port: 8090
+spring:
+  application:
+    name: car-microservice
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    url: jdbc:postgresql://postgresql:5432/car
+    username: postgres
+    password: toor
+  jpa:
+    hibernate:
+      ddl-auto: create
+    database: postgresql
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+
+application:
+  config:
+    client: http://client-service:8222/api
+management:
+  tracing:
+    sampling:
+      probability: 1.0
