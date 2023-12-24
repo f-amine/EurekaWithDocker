@@ -10,9 +10,5 @@ ARG JAR_FILE=target/*.jar
 # Add the application's jar to the container
 ADD ${JAR_FILE} app.jar
 
-ADD wait-for-it.sh wait-for-it.sh
-
-RUN chmod +x wait-for-it.sh
-
 # Run the jar file
 ENTRYPOINT ["java","-Djava.security.egd=file:/dev/./urandom","-jar","/app.jar"]

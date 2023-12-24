@@ -35,6 +35,8 @@ services:
     depends_on:
       - config-server
     restart: unless-stopped
+    environment:
+      SPRING_PROFILES_ACTIVE: docker
   gateway-service:
     image: gateway-service
     build:
@@ -47,8 +49,10 @@ services:
     depends_on:
       - config-server
     restart: unless-stopped
+    environment:
+        EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://discovery-service:8761/eureka
   car-service:
-    image: rating-service
+    image: car-service
     build:
       context: ./rating-service
       dockerfile: Dockerfile
@@ -56,12 +60,14 @@ services:
       - "8090:8090"
     networks:
       - postgres
+    environment:
+        EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://discovery-service:8761/eureka
     depends_on:
       - postgresql
       - config-server
     restart: unless-stopped
   client-service:
-    image: rating-service
+    image: client-service
     build:
       context: ./smarthouse-service
       dockerfile: Dockerfile
@@ -69,6 +75,8 @@ services:
       - "8070:8070"
     networks:
       - postgres
+    environment:
+      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://discovery-service:8761/eureka
     depends_on:
       - postgresql
       - config-server
@@ -100,8 +108,6 @@ networks:
     driver: bridge
   zipkin:
     driver: bridge
-
-
 
 volumes:
   postgres:

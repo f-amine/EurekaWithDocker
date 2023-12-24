@@ -17,7 +17,6 @@ import lombok.*;
         generator = ObjectIdGenerators.PropertyGenerator.class,
         property = "id")
 public class Car {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
